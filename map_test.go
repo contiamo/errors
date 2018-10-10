@@ -28,3 +28,13 @@ func TestIsMap(t *testing.T) {
 	assert.True(t, IsMap(m))
 	assert.False(t, IsMap(e))
 }
+
+func TestWeirdMergeMap(t *testing.T) {
+	m1 := Map{"f1": Slice{New("e1")}, "f2": Slice{New("e2")}}
+	m2 := Map{"f1": Slice{New("e4")}, "f3": Slice{New("e3")}}
+	m := MergeMap(m1, m2)
+	assert.Equal(t, 2, len(m["f1"]))
+	assert.Equal(t, 1, len(m["f2"]))
+	assert.Equal(t, 1, len(m["f3"]))
+
+}

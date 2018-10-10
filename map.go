@@ -56,7 +56,7 @@ func MergeMap(err1 Map, err2 Map) Map {
 		res[k] = v
 	}
 	for k, v := range err2 {
-		res[k] = v
+		res[k] = MergeSlice(res[k], v)
 	}
 	return res
 }
