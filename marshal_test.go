@@ -17,7 +17,7 @@ func TestMarshalToObject(t *testing.T) {
 	obj := MarshalToObject(slice, m, err4)
 	assert.Equal(t, 2, len(obj))
 	assert.Equal(t, 3, len(obj["errors"].([]string)))
-	assert.Equal(t, 1, len(obj["fieldErrors"].(map[string]string)))
+	assert.Equal(t, 1, len(obj["fieldErrors"].(map[string][]string)))
 }
 
 func TestMarshalToYAML(t *testing.T) {
@@ -35,7 +35,8 @@ func TestMarshalToYAML(t *testing.T) {
 - err2
 - err4
 fieldErrors:
-  field1: err3
+  field1:
+  - err3
 `
 	assert.Equal(t, expected, s)
 }
@@ -50,6 +51,6 @@ func TestMarshalToJSON(t *testing.T) {
 	buf := &bytes.Buffer{}
 	MarshalToJSON(buf, slice, m, err4)
 	s := buf.String()
-	expected := `{"errors":["err1","err2","err4"],"fieldErrors":{"field1":"err3"}}` + "\n"
+	expected := `{"errors":["err1","err2","err4"],"fieldErrors":{"field1":["err3"]}}` + "\n"
 	assert.Equal(t, expected, s)
 }

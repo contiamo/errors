@@ -21,9 +21,11 @@ func MarshalToObject(err error, additionalErrors ...error) map[string]interface{
 	}
 	obj := make(map[string]interface{})
 	if len(fieldErrors) > 0 {
-		m := make(map[string]string)
+		m := make(map[string][]string)
 		for k, v := range fieldErrors {
-			m[k] = v.Error()
+			for _, e := range v {
+				m[k] = append(m[k], e.Error())
+			}
 		}
 		obj["fieldErrors"] = m
 	}
