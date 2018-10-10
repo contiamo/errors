@@ -1,7 +1,6 @@
 package errors
 
 import (
-	"encoding/json"
 	"strings"
 )
 
@@ -60,14 +59,4 @@ func MergeMap(err1 Map, err2 Map) Map {
 		res[k] = v
 	}
 	return res
-}
-
-// MarshalJSON implements the json.Marshaler interface
-func (m Map) MarshalJSON() ([]byte, error) {
-	return json.Marshal(map[string]Slice(m))
-}
-
-// UnmarshalJSON implements the json.Unmarshaler interface
-func (m Map) UnmarshalJSON(bs []byte) error {
-	return json.Unmarshal(bs, &m)
 }

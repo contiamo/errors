@@ -1,7 +1,6 @@
 package errors
 
 import (
-	"encoding/json"
 	"strings"
 )
 
@@ -53,9 +52,4 @@ func MergeSlice(err error, additionalErrors ...error) Slice {
 		slice = append(slice, ToSlice(e)...)
 	}
 	return slice
-}
-
-// MarshalJSON implements the json.Marshaler interface
-func (s Slice) MarshalJSON() ([]byte, error) {
-	return json.Marshal([]*Error(s))
 }

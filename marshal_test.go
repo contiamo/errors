@@ -57,11 +57,11 @@ func TestMarshalToJSON(t *testing.T) {
 }
 
 func TestJSONMarshalerInterface(t *testing.T) {
-	sliceMarshaler := json.Marshaler(ToSlice(New("err1")))
+	sliceMarshaler := ToSlice(New("err1"))
 	bs, err := json.Marshal(sliceMarshaler)
 	assert.NoError(t, err)
 	assert.Equal(t, []byte(`["err1"]`), bs)
-	mapMarshaler := json.Marshaler(Map{"f1": Slice{New("err1")}})
+	mapMarshaler := Map{"f1": Slice{New("err1")}}
 	bs, err = json.Marshal(mapMarshaler)
 	assert.NoError(t, err)
 	assert.Equal(t, []byte(`{"f1":["err1"]}`), bs)
@@ -73,4 +73,9 @@ func TestJSONUnmarshalerInterface(t *testing.T) {
 	err := json.Unmarshal(bs, &s)
 	assert.NoError(t, err)
 	assert.Equal(t, "err1", s[0].Error())
+	m := Map{}
+	bs = []byte(`{"f1":["err1"]}`)
+	err = json.Unmarshal(bs, &m)
+	assert.NoError(t, err)
+	assert.Equal(t, "err1", m["f1"].Error())
 }
