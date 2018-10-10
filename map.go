@@ -1,6 +1,8 @@
 package errors
 
-import "strings"
+import (
+	"strings"
+)
 
 // Map is a map from string to error
 type Map map[string]Slice
