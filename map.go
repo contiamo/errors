@@ -3,7 +3,7 @@ package errors
 import "strings"
 
 // Map is a map from string to error
-type Map map[string]error
+type Map map[string]Slice
 
 func (m Map) Error() string {
 	builder := &strings.Builder{}
@@ -13,7 +13,7 @@ func (m Map) Error() string {
 		builder.WriteString(err.Error())
 		builder.WriteRune('\n')
 	}
-	return builder.String()
+	return strings.TrimRight(builder.String(), "\n")
 }
 
 // NewMap creates a new empty error map
@@ -34,16 +34,16 @@ func ToMap(err error, key ...string) Map {
 	}
 	errorMap := make(Map)
 	if len(key) > 0 {
-		errorMap[key[0]] = err
+		errorMap[key[0]] = ToSlice(err)
 	} else {
-		errorMap[""] = err
+		errorMap["error"] = ToSlice(err)
 	}
 	return errorMap
 }
 
 // Add sets an error in the map
 func (m Map) Add(key string, err error) Map {
-	m[key] = err
+	m[key] = MergeSlice(m[key], err)
 	return m
 }
 
