@@ -11,7 +11,8 @@ func (s Slice) Error() string {
 		builder.WriteString(err.Error())
 		builder.WriteRune('\n')
 	}
-	return builder.String()
+
+	return strings.TrimRight(builder.String(), "\n")
 }
 
 // NewSlice creates a new empty errors slice

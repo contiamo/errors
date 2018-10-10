@@ -41,7 +41,7 @@ func TestSliceErrorFunction(t *testing.T) {
 	err2 := New("err2")
 	err := ToSlice(err1, err2)
 	errMsg := err.Error()
-	assert.Equal(t, errMsg, "err1\nerr2\n")
+	assert.Equal(t, errMsg, "err1\nerr2")
 }
 
 func TestNewSlice(t *testing.T) {

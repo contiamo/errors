@@ -17,7 +17,9 @@ func TestMapAdd(t *testing.T) {
 	errMap := NewMap()
 	errMap.Add("field1", New("err1"))
 	errMap.Add("field2", New("err2"))
+	errMap.Add("field2", New("err3"))
 	assert.Equal(t, len(errMap), 2)
+	assert.Equal(t, len(errMap["field2"]), 2)
 }
 
 func TestIsMap(t *testing.T) {
