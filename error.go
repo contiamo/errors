@@ -20,6 +20,8 @@ func (e *Error) Error() string {
 // it may take a string or another error
 func New(e interface{}) *Error {
 	switch typedError := e.(type) {
+	case *Error:
+		return typedError
 	case error:
 		return &Error{typedError}
 	case string:
