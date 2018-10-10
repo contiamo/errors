@@ -22,8 +22,3 @@ func Wrapf(err error, format string, args ...interface{}) error {
 func WithStack(err error) error {
 	return errors.WithStack(err)
 }
-
-// New creates a new single error with a given message
-func New(msg string) error {
-	return errors.New(msg)
-}

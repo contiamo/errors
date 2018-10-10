@@ -1,9 +1,12 @@
 package errors
 
-import "strings"
+import (
+	"encoding/json"
+	"strings"
+)
 
 // Slice is a slice of errors
-type Slice []error
+type Slice []*Error
 
 func (s Slice) Error() string {
 	builder := &strings.Builder{}
@@ -32,15 +35,15 @@ func (s Slice) Add(errs ...error) Slice {
 }
 
 // ToSlice converts an error to a errors.Slice
+// this function reminds me about the good old haskel days :D
 func ToSlice(err error, additionalErrors ...error) Slice {
-	slice, ok := err.(Slice)
-	if !ok {
-		return Slice(append([]error{err}, additionalErrors...))
-	}
 	if len(additionalErrors) == 0 {
-		return slice
+		if s, ok := err.(Slice); ok {
+			return s
+		}
+		return Slice{New(err)}
 	}
-	return append(slice, additionalErrors...)
+	return append(Slice{New(err)}, ToSlice(additionalErrors[0], additionalErrors[1:]...)...)
 }
 
 // MergeSlice merges one or more errors to a slice
@@ -50,4 +53,9 @@ func MergeSlice(err error, additionalErrors ...error) Slice {
 		slice = append(slice, ToSlice(e)...)
 	}
 	return slice
+}
+
+// MarshalJSON implements the json.Marshaler interface
+func (s Slice) MarshalJSON() ([]byte, error) {
+	return json.Marshal([]*Error(s))
 }
