@@ -51,7 +51,7 @@ func (m Map) Add(key string, err error) Map {
 func MergeMap(err1 Map, err2 Map) Map {
 	res := NewMap()
 	for k, v := range err1 {
-		res[k] = MergeSlice(res[k], v)
+		res[k] = v
 	}
 	for k, v := range err2 {
 		res[k] = MergeSlice(res[k], v)
