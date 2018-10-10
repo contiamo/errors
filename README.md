@@ -24,7 +24,7 @@ errs = errs.Add("field2", errors.New("err2"))
 errs = errors.MergeMap(errs, errors.Map{"field3": errors.New("err3)})
 ```
 
-### Wrap, Wrapf, WithStack, New
+### Wrap, Wrapf, WithStack
 
 There are wrappers for the most used functions from the github.com/pkg/errors package
 
